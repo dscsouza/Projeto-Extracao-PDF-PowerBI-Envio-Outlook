@@ -1,25 +1,25 @@
 import os
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from PyPDF2 import PdfReader, PdfWriter
 import shutil
 from pathlib import Path
 from time import sleep
 
+# Sugestão de atualização do código para funcionar na versão PyPDF2 3.0.0
 #Digite o caminho completo do PDF
-pdf_file_path = 'Caminho completo do PDF.pdf'
+pdf_file_path = 'Caminho completo do Pdf.pdf'
 file_base_name = pdf_file_path.replace('.pdf', '')
 output_folder_path = os.path.join(os.getcwd(), 'Output')
 
-pdf = PdfFileReader(pdf_file_path)
+pdf = PdfReader(pdf_file_path)
 
-for page_num in range(pdf.numPages):
-    pdfWriter = PdfFileWriter()
-    pdfWriter.addPage(pdf.getPage(page_num))
+for page_num in range(len(pdf.pages)):
+    pdfWriter = PdfWriter()
+    pdfWriter.add_page(pdf.pages[page_num])
 
-    with open(os.path.join(output_folder_path, '{0}_Almox{1}.pdf'.format(file_base_name, page_num + 1)), 'wb') as f:
+    with open(os.path.join(output_folder_path, '{0}_TEMP{1}.pdf'.format(file_base_name, page_num + 1)), 'wb') as f:
         pdfWriter.write(f)
         f.close()
 
 print('PDF Cortado com sucesso!')
 print()
-
 
